@@ -11,6 +11,22 @@
     <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Todo List</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <!-- <li class="nav-item active d-flex">
+                    <a class="nav-link" href="./auth_index.html">Home</a>
+                </li> -->
+                <li class="nav-item active ">
+                    <a class="nav-link btn btn-default btn-sm" href="/auth/login">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <section class="vh-100" style="background-color: #3da2c3;">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -22,31 +38,31 @@
                             <form class="row row-cols-lg-auto justify-content-center align-items-start flex-column">
                             <ul class="list-group rounded-0" >
                                 <li class="list-group-item border-0 d-flex align-items-center ps-0">
-                                    <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
+                                    <input class="form-check-input me-3" type="checkbox" id="monday" name="monday" value="monday" aria-label="..." />
                                     Monday
                                 </li>
                                 <li class="list-group-item border-0 d-flex align-items-center ps-0">
-                                    <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
+                                    <input class="form-check-input me-3" type="checkbox" id="tuesday" name="tuesday" value="tuesday" aria-label="..." />
                                     Tuesday
                                 </li>
                                 <li class="list-group-item border-0 d-flex align-items-center ps-0">
-                                    <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
+                                    <input class="form-check-input me-3" type="checkbox" id="wednesday" name="wednesday" value="wednesday" aria-label="..." />
                                     Wednesday
                                 </li>
                                 <li class="list-group-item border-0 d-flex align-items-center ps-0">
-                                    <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
+                                    <input class="form-check-input me-3" type="checkbox" id="thursday" name="thursday" value="thursday" aria-label="..." />
                                     Thursday
                                 </li>
                                 <li class="list-group-item border-0 d-flex align-items-center ps-0">
-                                    <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
+                                    <input class="form-check-input me-3" type="checkbox" id="friday" name="friday" value="friday" aria-label="..." />
                                     Friday
                                 </li>
                                 <li class="list-group-item border-0 d-flex align-items-center ps-0">
-                                    <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
+                                    <input class="form-check-input me-3" type="checkbox" id="saturday" name="saturday" value="saturday" aria-label="..." />
                                     Saturday
                                 </li>
                                 <li class="list-group-item border-0 d-flex align-items-center ps-0">
-                                    <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
+                                    <input class="form-check-input me-3" type="checkbox" id="sunday" name="sunday" value="sunday" aria-label="..." />
                                     Sunday
                                 </li>
                             </ul>
