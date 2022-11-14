@@ -2,43 +2,46 @@ const dotenv = require('dotenv');
 dotenv.config();
 const cors = require('cors');
 const express = require('express');
+const session = require('express-session');
 app.use(cors());
 const app = express();
 const port = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL
 connectDB(DATABASE_URL);
-
 const passport = require('./config/passportSetup');
 
-const session = require('express-session');
 app.use(session({
     resave: false,
     saveUninitialized: true,
     secret: 'SECRET' 
 }));
 
-/*  PASSPORT SETUP  */
 const { stringify } = require('querystring');
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', (req, res) => {
     if(req.isAuthenticated()){
-        res.render('pages/profile' , {name: req.user.name , email: req.user.email , pic: req.user.pic});
+        res.send({"user": req.user.name , "user": req.user.email , "user": req.user.pic})
+        // res.render('pages/profile' , {name: req.user.name , email: req.user.email , pic: req.user.pic});
     }
     else{
-        res.render('pages/auth');
+        res.send({"status" : "failed" , "message" : "login is required"})
+        // res.render('pages/auth');
     }
 });
 
 app.get('/success', (req, res) =>{
-    res.render("pages/profile.ejs",{name: req.user.name , email: req.user.email , pic: req.user.pic})
+    if(req.isAuthenticated()) {
+        res.send({"user": req.user.name , "user": req.user.email , "user": req.user.pic});
+        // res.render("pages/profile.ejs",{name: req.user.name , email: req.user.email , pic: req.user.pic})
+    }
 });
 app.get('/error', (req, res) => res.send("error logging in"));
 
 app.get('/auth/logout', (req, res) => {
     req.session.destroy();
-    res.redirect('/');
+    // res.redirect('/');
     req.logout();
 })
 app.get('/auth/google', 
