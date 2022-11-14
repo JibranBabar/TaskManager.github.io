@@ -3,8 +3,9 @@ dotenv.config();
 const cors = require('cors');
 const express = require('express');
 const session = require('express-session');
-app.use(cors());
+const connectDB = require('./config/connectDb')
 const app = express();
+app.use(cors());
 const port = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL
 connectDB(DATABASE_URL);
@@ -41,6 +42,7 @@ app.get('/error', (req, res) => res.send("error logging in"));
 
 app.get('/auth/logout', (req, res) => {
     req.session.destroy();
+    res.send({"status" : "Success" , "message" : "logout successfully"})
     // res.redirect('/');
     req.logout();
 })
@@ -49,8 +51,9 @@ app.get('/auth/google',
 app.get('/auth/google/callback', 
     passport.authenticate('google', { failureRedirect: '/error' }),
     function(req, res) {
+        res.send({"status" : "success" , "message" : "login successfully"})
     // Successful authentication, redirect success.
-    res.redirect('/success');
+    // res.redirect('/success');
 });
 
 app.listen(port , () => console.log('App listening on port ' + port));

@@ -22,6 +22,7 @@ function(accessToken, refreshToken, profile, done) {
         return done(err , user);
     });
 }
-));
-
-export default passport;
+))
+module.exports = {
+    passport
+}
