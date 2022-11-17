@@ -1,7 +1,7 @@
+const passport = require('passport');
+const Users = require('../models/userModel')
 const dotenv = require('dotenv');
 dotenv.config();
-
-const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 passport.serializeUser(function(user, cb) {
@@ -10,7 +10,6 @@ passport.serializeUser(function(user, cb) {
 passport.deserializeUser(function(obj, cb) {
     cb(null, obj);
 });
-
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -22,7 +21,6 @@ function(accessToken, refreshToken, profile, done) {
         return done(err , user);
     });
 }
-))
-module.exports = {
-    passport
-}
+));
+
+// module.exports = passport

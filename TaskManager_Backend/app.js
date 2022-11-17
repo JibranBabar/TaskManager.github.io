@@ -1,25 +1,31 @@
-const dotenv = require('dotenv');
+const dotenv = require('dotenv')
 dotenv.config();
-const cors = require('cors');
 const express = require('express');
+const app = express();
 const session = require('express-session');
 const connectDB = require('./config/connectDb')
-const app = express();
-app.use(cors());
+const cors = require('cors');
+const passport = require('passport')
+require('./config/passportSetup');
 const port = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL
 connectDB(DATABASE_URL);
-const passport = require('./config/passportSetup');
 
 app.use(session({
     resave: false,
     saveUninitialized: true,
     secret: 'SECRET' 
 }));
-
-const { stringify } = require('querystring');
+// const { stringify } = require('querystring');
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(
+    cors({
+        origin: "*",
+        method: ['GET' , 'POST'],
+    })
+);
 
 app.get('/', (req, res) => {
     if(req.isAuthenticated()){
