@@ -16,9 +16,17 @@ app.use(session({
     saveUninitialized: true,
     secret: 'SECRET' 
 }));
-// const { stringify } = require('querystring');
-app.use(passport.initialize());
-app.use(passport.session());
+
+// const whitelist = ['http://localhost:3000/auth/google', 'http://localhost:3000/auth/google/callback']
+// const corsOptions = {
+//     origin: (origin, callback) => {
+//     if (whitelist.indexOf(origin) !== -1) {
+//         callback(null, true)
+//     } else {
+//         callback(new Error())
+//     }
+//     }
+// }
 
 app.use(
     cors({
@@ -26,6 +34,11 @@ app.use(
         method: ['GET' , 'POST'],
     })
 );
+
+// const { stringify } = require('querystring');
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.get('/', (req, res) => {
     if(req.isAuthenticated()){
@@ -52,9 +65,9 @@ app.get('/auth/logout', (req, res) => {
     // res.redirect('/');
     req.logout();
 })
-app.get('/auth/google', 
+app.get('/auth/google', cors() , 
     passport.authenticate('google', { scope : ['profile', 'email'] }));
-app.get('/auth/google/callback', 
+app.get('/auth/google/callback', cors() , 
     passport.authenticate('google', { failureRedirect: '/error' }),
     function(req, res) {
         res.send({"status" : "success" , "message" : "login successfully"})
