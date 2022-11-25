@@ -17,10 +17,11 @@ passport.use(new GoogleStrategy({
     // callbackURL: "http://localhost:3000/auth/google/callback"
 },
 function(accessToken, refreshToken, profile, done) {
-    Users.findOrCreate({userId : profile.id , name: profile.displayName , email: profile.emails[0].value , pic: profile.photos[0].value} , function (err , user) {
-        return done(err , user);
+    Users.findOrCreate({userId : profile.id , name: profile.displayName , email: profile.emails[0].value , pic: profile.photos[0].value},
+        function (err , user) {
+            return done(err , user);
     });
 }
 ));
 
-// module.exports = passport
+module.exports = passport

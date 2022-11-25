@@ -11,48 +11,51 @@ const port = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL
 connectDB(DATABASE_URL);
 
-app.use(session({
-    resave: false,
-    saveUninitialized: true,
-    secret: 'SECRET' 
-}));
-app.use(express.urlencoded({extended: false}));
+
+app.use(express.urlencoded({extended:true}))
+app.use(
+    session({
+        secret: 'keyboard cat',
+        resave: false,
+        saveUninitialized: false,
+        // store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    })
+)
+
 app.use(cors(
     origin = '*'
-    
 ));
 
-const { stringify } = require('querystring');
-const { METHODS } = require('http');
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 
+app.get('/test', (req, res) => {
+    res.send({"status": "workings"});
+});
+
 app.get('/', (req, res) => {
     if(req.isAuthenticated()){
         res.send({"user": req.user.name , "user": req.user.email , "user": req.user.pic})
-        // res.render('pages/profile' , {name: req.user.name , email: req.user.email , pic: req.user.pic});
     }
     else{
         res.send({"status" : "failed" , "message" : "login is required"})
-        // res.render('pages/auth');
     }
 });
 
 app.get('/auth/google',
     passport.authenticate('google', { scope : ['profile', 'email'] }));
-app.get('/auth/google/callback',cors(),
-    passport.authenticate('google', { failureRedirect: '/error' }),
-    function(req, res) {
-        res.send({"status" : "success" , "message" : "login successfully"})
-    // Successful authentication, redirect success.
-    // res.redirect('/success');
-});
+app.get('/auth/google/callback',
+            passport.authenticate('google', {successRedirect: '/auth/google/callback/success' , failureRedirect: '/'}),
+            (req, res) => {
+                res.send({"status" : "success" , "message" : "login successfully"})
+            }
+);
 
-app.get('/success', (req, res) =>{
+app.get('/auth/google/callback/success', (req, res) =>{
     if(req.isAuthenticated()) {
-        res.send({"user": req.user.name , "user": req.user.email , "user": req.user.pic});
-        // res.render("pages/profile.ejs",{name: req.user.name , email: req.user.email , pic: req.user.pic})
+        res.send({"status" : "success" , "message" : "login successfully"})
     }
 });
 app.get('/error', (req, res) => res.send("error logging in"));
@@ -65,3 +68,45 @@ app.get('/auth/logout', (req, res) => {
 })
 
 app.listen(port , () => console.log('App listening on port ' + port));
+
+
+
+
+
+
+
+
+
+
+
+// 
+// locations = [
+
+//     {
+//       'city' => 'New York',
+//       'state' => 'NY',
+//       'zip' => '000000',
+//     },
+//     {
+//       'city' => 'New York',
+//       'state' => 'NY',
+//       'zip' => '000000',
+//     },
+//     {
+//       'city' => 'New York',
+//       'state' => 'NY',
+//       'zip' => '000000',
+//     },
+//     {
+//       'city' => 'New York',
+//       'state' => 'NY',
+//       'zip' => '000000',
+//     },
+//     {
+//       'city' => 'New York',
+//       'state' => 'NY',
+//       'zip' => '000000',
+//     },
+  
+  
+//   ]
