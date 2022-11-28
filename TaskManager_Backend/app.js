@@ -30,11 +30,6 @@ app.use(cors(
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-app.get('/test', (req, res) => {
-    res.send({"status": "workings"});
-});
-
 app.get('/', (req, res) => {
     if(req.isAuthenticated()){
         res.send({"user": req.user.name , "user": req.user.email , "user": req.user.pic})
@@ -49,13 +44,14 @@ app.get('/auth/google',
 app.get('/auth/google/callback',
             passport.authenticate('google', {successRedirect: '/auth/google/callback/success' , failureRedirect: '/'}),
             (req, res) => {
-                res.send({"status" : "success" , "message" : "login successfully"})
+                res.send({"status" : "success" , "message" : "login successfully"});
             }
 );
 
 app.get('/auth/google/callback/success', (req, res) =>{
     if(req.isAuthenticated()) {
-        res.send({"status" : "success" , "message" : "login successfully"})
+        // res.removeAllListeners
+        res.send({"status" : "success" , "message" : "Welcome"});
     }
 });
 app.get('/error', (req, res) => res.send("error logging in"));
@@ -63,7 +59,7 @@ app.get('/error', (req, res) => res.send("error logging in"));
 app.get('/auth/logout', (req, res) => {
     req.session.destroy();
     res.send({"status" : "Success" , "message" : "logout successfully"})
-    // res.redirect('/');
+    res.redirect('/');
     req.logout();
 })
 
