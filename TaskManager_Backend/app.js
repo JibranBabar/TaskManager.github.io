@@ -9,7 +9,6 @@ const passport = require("passport");
 require("./config/passportSetup");
 const port = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL;
-const f_URL = process.env.FRONTEND_URL;
 connectDB(DATABASE_URL);
 const authRoute = require('./routes/userRoute.js')
 app.use(express.urlencoded({ extended: true }));

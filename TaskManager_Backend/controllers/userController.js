@@ -1,5 +1,8 @@
 const passport = require("passport");
 require("../config/passportSetup.js");
+const f_URL = process.env.FRONTEND_URL;
+
+
 const index = (req , res) => {
     if (req.isAuthenticated()) {
         res.send({ user: req.user.name, user: req.user.email, user: req.user.pic });
